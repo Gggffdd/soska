@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Альянс / by ccyka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh; /* для современных мобильных браузеров */
+            background-image: url('https://i.postimg.cc/HnSfjcsV/Lucid-Origin-create-a-highly-vibrant-extremely-colorful-sunny-0.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* сохраняет фон при скролле */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;  /* центрируем по вертикали */
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* мягкое затемнение, чтобы кнопки лучше читались (опционально) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* легкая вуаль */
+            pointer-events: none; /* чтобы не блокировать клики */
+            z-index: 0;
+        }
+
+        .buttons-container {
+            width: 100%;
+            max-width: 400px; /* комфортная ширина для телефона */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            z-index: 2; /* над затемнением */
+            margin: 20px 0;
+        }
+
+        /* стиль для всех кнопок */
+        .glass-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            padding: 18px 16px;
+            background-color: transparent; /* прозрачный фон, видно фото */
+            border: 3px solid #1E4F8A;      /* синяя обводка */
+            border-radius: 60px;            /* достаточно скругления */
+            backdrop-filter: blur(8px);      /* эффект матового стекла (переливы) */
+            -webkit-backdrop-filter: blur(8px);
+            background: rgba(30, 80, 140, 0.2); /* легкая синяя полупрозрачность */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+                        0 0 15px rgba(70, 130, 200, 0.6); /* свечение для перелива */
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-color: #1E4F8A;                /* темно-синяя обводка */
+            box-shadow: 0 4px 12px rgba(0, 20, 40, 0.4), inset 0 0 25px rgba(70, 150, 255, 0.3);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* более тёмная обводка (чуть темнее базовой) */
+        .glass-button {
+            border-color: #0f3a5f; /* темнее #1E4F8A */
+        }
+
+        /* Эффект перелива при движении/наведении (для десктопа) и активном состоянии */
+        .glass-button:hover {
+            background: rgba(40, 100, 180, 0.3);
+            border-color: #2a62a0;
+            box-shadow: 0 8px 25px rgba(0, 30, 70, 0.6), 0 0 30px #3f8eff;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transform: scale(1.02);
+        }
+
+        /* Эффект при нажатии (телефон) */
+        .glass-button:active {
+            transform: scale(0.98);
+            background: rgba(20, 70, 140, 0.4);
+            border-color: #0c2e4a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 30px #1e90ff;
+            transition: 0.1s;
+        }
+
+        /* подпись снизу */
+        .footer {
+            position: fixed;
+            bottom: 16px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: lowercase;
+            letter-spacing: 0.7px;
+            z-index: 5;
+            text-shadow: 0 2px 6px black;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 0;
+            backdrop-filter: blur(4px);
+            width: fit-content;
+            margin: 0 auto;
+            padding: 6px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 400;
+            pointer-events: none; /* чтобы не мешала нажимать кнопки */
+        }
+
+        /* для очень маленьких экранов */
+        @media (max-width: 380px) {
+            .glass-button {
+                padding: 15px 12px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* если в телефоне есть вырез/notch — небольшой отступ */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+            }
+            .footer {
+                bottom: max(16px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons-container">
+        <!-- Кнопка 1: Стать гарантом -->
+        <a href="https://t.me/ccyka" class="glass-button" target="_blank" rel="noopener noreferrer">Стать гарантом</a>
+
+        <!-- Кнопка 2: Купить рекламу -->
+        <a href="https://t.me/Soskapiar_bot" class="glass-button" target="_blank" rel="noopener noreferrer">Купить рекламу</a>
+
+        <!-- Кнопка 3: Сетка чатов -->
+        <a href="https://t.me/Soskapiar_bot" class="glass-button" target="_blank" rel="noopener noreferrer">Сетка чатов</a>
+
+        <!-- Кнопка 4: Альянс Ордерс -->
+        <a href="https://t.me/AllianceOrders" class="glass-button" target="_blank" rel="noopener noreferrer">Альянс Ордерс</a>
+    </div>
+
+    <div class="footer">by ccyka</div>
+
+    <!-- Небольшой скрипт для корректной работы в WebView Telegram (опционально) -->
+    <script>
+        // Сообщаем Telegram WebApp, что мы готовы
+        if (window.Telegram && Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.expand(); // растянуть на весь экран
+        }
+
+        // Дополнительно: чтобы ссылки открывались внутри Telegram, если нужно
+        // но target="_blank" всё же предпочтительнее для внешних ботов/ссылок.
+        // Можно добавить обработку кликов с подтверждением, но оставим как есть.
+    </script>
+</body>
+</html>
